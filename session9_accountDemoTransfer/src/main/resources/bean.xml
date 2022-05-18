@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+    <!-- 配置c3p0数据源 -->
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+    </bean>
+
+    <!-- 配置queryRunner -->
+    <bean id="queryRunner" class="org.apache.commons.dbutils.QueryRunner" scope="prototype">
+        <!-- 不提供ds，使用dao提供的conn    -->
+    </bean>
+
+    <!-- 配置ConnectionUtils -->
+    <bean id="connectionUtils" class="pers.kkddyz.utils.ConnectionUtils">
+        <!-- 注入数据源-->
+        <constructor-arg name="dataSource" ref="dataSource"></constructor-arg>
+    </bean>
+
+    <!-- 配置txManager -->
+    <bean id="txManager" class="pers.kkddyz.utils.TransactionManager">
+        <!-- 注入ConnectionUtils -->
+        <property name="connectionUtils" ref="connectionUtils"></property>
+    </bean>
+
+    <!-- 配置Dao -->
+    <bean id="accountDao" class="pers.kkddyz.dao.impl.AccountDaoImpl">
+        <!-- 注入QueryRunner -->
+        <property name="runner" ref="queryRunner"></property>
+        <!-- 注入ConnectionUtils -->
+        <property name="connectionUtils" ref="connectionUtils"></property>
+    </bean>
+
+    <!--&lt;!&ndash; 配置Service(使用txManager增强后的serviceImpl)&ndash;&gt;-->
+    <!--<bean id="accountService" class="pers.kkddyz.service.impl.AccountServiceImpl">-->
+    <!--    &lt;!&ndash; 注入dao &ndash;&gt;-->
+    <!--    <property name="accountDao" ref="accountDao"></property>-->
+
+    <!--    &lt;!&ndash; 注入txManager &ndash;&gt;-->
+    <!--    <property name="transactionManager" ref="txManager"></property>-->
+    <!--</bean>-->
+
+    <!-- 配置代理对象 -->
+
+    <!--配置被代理对象:没有实现事务控制的service-->
+    <bean id="accountService" class="pers.kkddyz.service.impl.AccountServiceImplOld">
+        <property name="accountDao" ref="accountDao"></property>
+    </bean>
+
+    <!-- 配置BeanFactory创建代理Service-->
+    <bean id="beanFactory" class="pers.kkddyz.factory.BeanFactory">
+
+        <!-- 注入被代理对象 -->
+        <property name="accountService" ref="accountService"></property>
+
+        <!-- 注入事务管理器 -->
+        <property name="transactionManager" ref="txManager"></property>
+    </bean>
+
+    <!-- 配置代理对象 -->
+    <bean id="proxyAccountService" factory-bean="beanFactory" factory-method="getAccountServiceProxy"></bean>
+
+
+
+
+</beans>
