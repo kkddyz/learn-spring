@@ -8,16 +8,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 /**
- * @author pers.pers.kkddyz
- * <p>
- * 连接的工具类
- * 从数据源获取连接，并且实现与线程的绑定。
- * <p>
- * 到底什么叫与线程绑定 -- 设为threadLoacl
- * <p>
- * 我既然在使用ConnectionUtils，那么这个线程又在哪里，为什么不是ConnectionUtils的方法？？？
- * <p>
- * （为什么需要一个线程，线程从哪里开始，在哪里结束，线程的数据结构是什么，谁来管理线程）
+ * @author kkddyz
  */
 @Component("connectionUtils")
 public class ConnectionUtils {
@@ -56,7 +47,7 @@ public class ConnectionUtils {
 
 
     /**
-     * 将conn与线程解绑,也就是清除threadLocal绑定的conn
+     * 将conn与线程解绑
      */
     public void removeConnection() {
         threadLocal.remove();

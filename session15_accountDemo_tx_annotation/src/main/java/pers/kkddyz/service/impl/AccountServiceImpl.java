@@ -19,22 +19,6 @@ public class AccountServiceImpl implements IAccountService {
     @Autowired
     private IAccountDao accountDao;
 
-
-    @Override
-    public List<Account> findAllAccount() {
-        return accountDao.findAllAccount();
-    }
-
-    @Override
-    public Account findAccountById(Integer id) {
-        return accountDao.findAccountById(id);
-    }
-
-    @Override
-    public void saveAccount(Account account) {
-        accountDao.saveAccount(account);
-    }
-
     @Override
     public void transfer(String sourceName, String targetName, float money) {
         // 1 查询转入，转出账户
@@ -49,7 +33,7 @@ public class AccountServiceImpl implements IAccountService {
         accountDao.updateAccount(source);
 
         // 设置异常，使得 source更新，target，不能更新。
-        int a = 1/0;
+        //int a = 1/0;
         accountDao.updateAccount(target);
     }
 }

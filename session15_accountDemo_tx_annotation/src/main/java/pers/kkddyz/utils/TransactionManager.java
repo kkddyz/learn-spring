@@ -10,14 +10,9 @@ import org.springframework.stereotype.Component;
 import java.sql.SQLException;
 
 /**
- * @author pers.pers.kkddyz
- * <p>
- * <p>
  * 事务管理的工具类
- * 1. 开启事务
- * 2. 提交事务
- * 3. 回滚事务
- * 4. 释放资源
+ *
+ * @author kkddyz
  */
 @Component("txManager")
 @Aspect
@@ -38,7 +33,7 @@ public class TransactionManager {
 
 
     /**
-     * 开启事务 关闭自动提交,目的是什么,手动实现事务管理
+     * 开启事务
      */
     //@Before("pt1()")
     public void beginTransaction() {
@@ -86,6 +81,10 @@ public class TransactionManager {
         }
     }
 
+
+    /**
+     * 环绕通知 : 手动配置通知
+     */
     @Around("pt1()")
     public Object roundAdvice(ProceedingJoinPoint proceedingJoinPoint) {
 

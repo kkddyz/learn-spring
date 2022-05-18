@@ -42,11 +42,18 @@
             <version>8.0.19</version>
         </dependency>
 
-        <!-- JdbcTemplate-->
+        <!-- c3p0连接池 -->
         <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-jdbc</artifactId>
-            <version>5.2.5.RELEASE</version>
+            <groupId>c3p0</groupId>
+            <artifactId>c3p0</artifactId>
+            <version>0.9.1.2</version>
+        </dependency>
+
+        <!-- dbutils -->
+        <dependency>
+            <groupId>commons-dbutils</groupId>
+            <artifactId>commons-dbutils</artifactId>
+            <version>1.7</version>
         </dependency>
 
         <!-- Junit -->
