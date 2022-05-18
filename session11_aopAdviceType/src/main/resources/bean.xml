@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/aop
+        https://www.springframework.org/schema/aop/spring-aop.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!-- 配置service -->
+    <bean id="accountService" class="pers.kkddyz.service.impl.AccountServiceImpl"></bean>
+
+    <bean id="logger" class="pers.kkddyz.utils.Logger"></bean>
+
+    <aop:config>
+
+        <!-- 配置切入点表达式,可以卸载aspect标签内部,也可以写外部(但是一定要写在aspect前面)-->
+        <aop:pointcut id="servicePointCut" expression="execution( * pers.kkddyz.service..*.*(..) )"/>
+
+        <aop:aspect id="logAdvice" ref="logger">
+            <!-- 表达式切入到service的所有方法-->
+
+            <!--&lt;!&ndash; 前置通知 &ndash;&gt;-->
+            <!--<aop:before method="beforePrintLog" pointcut-ref="servicePointCut"></aop:before>-->
+
+            <!--&lt;!&ndash; 后置通知 &ndash;&gt;-->
+            <!--<aop:after-returning method="afterReturningPrintLog" pointcut-ref="servicePointCut"></aop:after-returning>-->
+
+            <!--&lt;!&ndash; 异常通知 catch &ndash;&gt;-->
+            <!--<aop:after-throwing method="afterThrowingPrintLog" pointcut-ref="servicePointCut"></aop:after-throwing>-->
+
+            <!--&lt;!&ndash; 最终通知 finally &ndash;&gt;-->
+            <!--<aop:after method="afterPrintLog" pointcut-ref="servicePointCut"></aop:after>-->
+
+            <!-- 环绕通知 -->
+            <aop:around method="aroundPrintLog" pointcut-ref="servicePointCut"></aop:around>
+        </aop:aspect>
+    </aop:config>
+
+
+
+</beans>

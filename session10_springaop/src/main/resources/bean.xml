@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/aop
+        https://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <!-- 配置service -->
+    <bean id="accountService" class="pers.kkddyz.service.impl.AccountServiceImpl"></bean>
+
+    <!-- spring基于AOP的配置步骤
+            1. 把通知bean也交由spring管理 -> 通知bean指的是 实现增强的对象
+            2. 使用aop:config标签表明开始aop配置
+            3. 使用aop:aspect表示开始配置切面
+                - id属性:  切面aspect的唯一标志
+                - ref属性: 通知类的BeanId
+            4. 在aspect内部配置通知
+                - aop:before 前置通知
+                    - method 指定通知方法
+                - aop:after  后置通知
+
+
+            5. 指定aspect的切入点(aspect在正确的切入点才能使用对应通知)
+                - 在aop:before中使用pointcut属性指定切入表达式
+                - 切入点在每一个通过中指定,同一个切面中，不同连接点前后的通知不一定相同
+
+                切入表达式
+                    - execution("方法路径")
+                    - execution(public void pers.kkddyz.service.IAccountService.saveAccount())
+                    - 方法路径需要包含完整的签名与类路径
+
+
+
+    -->
+
+    <bean id="logger" class="pers.kkddyz.utils.Logger"></bean>
+
+    <aop:config>
+        <aop:aspect id="logAdvice" ref="logger">
+            <!-- 前置通知: 让logger.printLog在切入点之前执行 -->
+            <aop:before method="printLog" pointcut="execution(  * *.*.*..*.*(..) )"></aop:before>
+        </aop:aspect>
+    </aop:config>
+
+</beans>
