@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- 把对象的创建交给spring管理-->
+    <!-- spring对bean的管理细节
+            1. 创建bean的三种方式
+            2. bean对象的作用域
+            3. bean对象的生存周期
+    -->
+
+    <!-- 创建bean的三种方式 -->
+
+    <!-- 1. 使用默认构造函数创建
+            - 在bean中只使用id,class属性
+    -->
+    <!--<bean-->
+    <!--        id="accountService"-->
+    <!--        class="pers.AccountServiceImpl">-->
+    <!--</bean>-->
+
+    <!-- 2. 使用普通工的方法创建对象
+            1. 将工厂当作普通bean配置
+            2. 配置service
+                - factory-bean      指定工厂的id
+                - factory-method    指定工厂创建bean的方法
+    -->
+    <!--<bean id="instanceFactory" class="pers.kkddyz.factory.InstanceFactory"></bean>-->
+
+    <!--<bean id="accountService"-->
+    <!--      factory-bean="instanceFactory"-->
+    <!--      factory-method="getAccountService">-->
+    <!--</bean>-->
+
+    <!--3. 使用静态方法创建对象
+            不需要实例化工厂
+    -->
+    <bean id="accountService"
+          class="pers.kkddyz.factory.StaticFactory"
+          factory-method="getAccountService">
+    </bean>
+
+    <!-- bean的作用范围 -->
+
+    <!--bean标签的scope属性
+            - 指定bean作用范围
+        取值
+            1. singleton : 单例,默认值;
+            2. prototype : 多例
+
+            3. request: web应用的请求范围
+            4. session: web应用的会话范围
+            5. global-session: : 集群环境的会话范围(全局会话范围),如果不是集群和session一样.
+
+    -->
+    <!-- 创建accountService,为多例-->
+    <!--<bean id="accountService" class="pers.AccountServiceImpl"-->
+    <!--    scope="prototype">-->
+    <!--</bean>-->
+
+
+</beans>
+
