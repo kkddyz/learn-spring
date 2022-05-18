@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+    <!-- 构造函数注入
+            在bean标签内部使用标签constructor-arg
+            constructor-arg标签属性 : 用于确定
+                type:   指定注入的数据类型(无法唯一确定一个构造器参数,可能存在相同类型的参数)
+                index:  指定注入数据的对应的构造器参数,索引从0开始(由于没有明确参数类型是不是引用,不可以独立实现注入)
+                name:   指定注入数据的参数名
+                ==============以上三个用于指定给赋值====================================================
+                value:  给基本类型和String指定数据
+                ref:    指定其他bean类型数据(在Spring ioc容器中存在的bean对象)
+
+    -->
+
+    <!--提前配置Date类型到Ioc容器,其他bean通过id引用-->
+    <bean id="now" class="java.util.Date"></bean>
+
+    <bean id="accountService"
+          class="pers.kkddyz.service.impl.AccountServiceImpl"
+          scope="prototype">
+
+        <constructor-arg name="service" value="testName1"></constructor-arg>
+        <constructor-arg name="serviceID" value="1"></constructor-arg>
+        <constructor-arg index="2" ref="now"></constructor-arg>
+    </bean>
+
+    <!--setter()注入
+            使用property标签
+                name 用于指定属性名(属性是只set方法的名字)
+                value 提供基本类型和String的数据
+                ref 提供其他bean
+    -->
+
+    <bean id="accountServiceCopy" class="pers.kkddyz.service.impl.AccountServiceImplCopy">
+        <property name="serviceName" value="testName2"></property>
+        <property name="serviceID" value="2"></property>
+        <property name="createTime" ref="now"></property>
+    </bean>
+
+
+    <!--集合类型的注入 使用set注入
+
+        prop,map通用;array,list,set通用
+    -->
+    <bean id="accountService3" class="pers.kkddyz.service.impl.AccountServiceImpl3">
+
+        <!-- 注入Array-->
+        <property name="myStrings">
+            <array>
+                <value>AAA</value>
+                <value>BBB</value>
+                <value>CCC</value>
+            </array>
+        </property>
+
+        <!-- 注入List -->
+        <property name="myList">
+            <list>
+                <value>AAA</value>
+                <value>BBB</value>
+                <value>CCC</value>
+            </list>
+        </property>
+
+        <!-- Set元素注入,value标签中的重复元素会过滤-->
+        <property name="mySet">
+            <set>
+                <value>AAA</value>
+                <value>BBB</value>
+                <value>AAA</value>
+            </set>
+        </property>
+
+        <!-- map元素注入 -->
+        <property name="myMap">
+            <map>
+                <!-- 在prop标签体中写key对应的值-->
+                <entry key="mapKey1" value="value1"/>
+                <entry key="mapKey2" value="value2"/>
+            </map>
+            <!--<props>-->
+            <!--    <prop key="mapKey1">value1</prop>-->
+            <!--    <prop key="mapKey2">value2</prop>-->
+            <!--</props>-->
+        </property>
+
+
+        <!-- props元素注入 -->
+        <property name="myProps">
+            <props>
+                <!-- 在prop标签体中写key对应的值-->
+                <prop key="propKey1">value1</prop>
+                <prop key="propKey2">value2</prop>
+            </props>
+        </property>
+
+    </bean>
+</beans>
+
