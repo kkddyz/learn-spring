@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+    <!-- 配置数据源
+            C3P0使用无参构造函数创建对象时，会自动读取约定位置的配置文件，设置属性
+            否则需要使用property标签，配置连接数据库的必要属性
+    -->
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+    </bean>
+
+    <!-- 配置queryRunner,没有提供setter接,通过构造器传参 -->
+    <bean id="queryRunner" class="org.apache.commons.dbutils.QueryRunner" scope="prototype">
+        <constructor-arg name="ds" ref="dataSource"></constructor-arg>
+    </bean>
+
+    <!-- 配置dao -->
+    <bean id="accountDao" class="pers.kkddyz.dao.impl.AccountDaoImpl">
+        <property name="runner" ref="queryRunner"></property>
+    </bean>
+
+    <!-- 配置service -->
+    <bean id="accountService" class="pers.kkddyz.service.impl.AccountServiceImpl">
+        <property name="accountDao" ref="accountDao"></property>
+    </bean>
+</beans>
