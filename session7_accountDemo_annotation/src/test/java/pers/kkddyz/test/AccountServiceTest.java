@@ -3,7 +3,6 @@ package pers.kkddyz.test;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import pers.kkddyz.dao.impl.AccountDaoImpl;
 import pers.kkddyz.domain.Account;
 import pers.kkddyz.service.IAccountService;
 
