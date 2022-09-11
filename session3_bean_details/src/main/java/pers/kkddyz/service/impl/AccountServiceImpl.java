@@ -9,6 +9,9 @@ import pers.kkddyz.service.IAccountService;
  */
 public class AccountServiceImpl implements IAccountService {
 
+    /**
+     * no args constructor
+     */
     public AccountServiceImpl(){
         System.out.println("无参构造器,创建了accountService对象");
     }

@@ -18,7 +18,7 @@
     -->
     <!--<bean-->
     <!--        id="accountService"-->
-    <!--        class="pers.AccountServiceImpl">-->
+    <!--        class="pers.kkddyz.service.impl.AccountServiceImpl">-->
     <!--</bean>-->
 
     <!-- 2. 使用普通工的方法创建对象
@@ -27,20 +27,20 @@
                 - factory-bean      指定工厂的id
                 - factory-method    指定工厂创建bean的方法
     -->
-    <!--<bean id="instanceFactory" class="pers.kkddyz.factory.InstanceFactory"></bean>-->
+    <bean id="instanceFactory" class="pers.kkddyz.factory.InstanceFactory"></bean>
 
-    <!--<bean id="accountService"-->
-    <!--      factory-bean="instanceFactory"-->
-    <!--      factory-method="getAccountService">-->
-    <!--</bean>-->
+    <bean id="accountService"
+          factory-bean="instanceFactory"
+          factory-method="getAccountService">
+    </bean>
 
     <!--3. 使用静态方法创建对象
             不需要实例化工厂
     -->
-    <bean id="accountService"
-          class="pers.kkddyz.factory.StaticFactory"
-          factory-method="getAccountService">
-    </bean>
+    <!--<bean id="accountService"-->
+    <!--      class="pers.kkddyz.factory.StaticFactory"-->
+    <!--      factory-method="getAccountService">-->
+    <!--</bean>-->
 
     <!-- bean的作用范围 -->
 

@@ -12,6 +12,7 @@ public class InstanceFactory {
 
     public IAccountService getAccountService(){
         System.out.println("工厂方法创建service");
+        // 没有DI，因此此时的getAccountService(工厂方法)，没有参数
         return new AccountServiceImpl("Test");
     }
 }
